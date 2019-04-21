@@ -123,6 +123,16 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                     REQUIRE(lexer.value() == ')');
                 }
             }
+            WHEN("the backslash is followed by a backslash") {
+                stream << '\\';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                }
+                THEN("the value is a backslash") {
+                    REQUIRE(lexer.value() == '\\');
+                }
+            }
             WHEN("the backslash is followed by a regular character") {
                 stream << 't';
                 lexer.eat();
