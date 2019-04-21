@@ -9,6 +9,7 @@ namespace parser
         STAR,
         OPENING_PARENTHESIS,
         CLOSING_PARENTHESIS,
+        CHARACTER,
         END
     };
 }
