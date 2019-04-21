@@ -9,6 +9,7 @@ namespace parser
     {
     private:
         std::istream& input_;
+        token current_token_;
     public:
         lexer(std::istream& input);
 

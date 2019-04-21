@@ -4,6 +4,7 @@ namespace parser
 {
     enum class token
     {
-        BEGIN
+        BEGIN,
+        END
     };
 }
