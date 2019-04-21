@@ -61,5 +61,15 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == '(');
             }
         }
+        WHEN("a closing parenthesis is the next character in the stream") {
+            stream << ')';
+            lexer.eat();
+            THEN("the token is a closing parenthesis") {
+                REQUIRE(lexer.current() == parser::token::CLOSING_PARENTHESIS);
+            }
+            THEN("the value is a closing parenthesis") {
+                REQUIRE(lexer.value() == ')');
+            }
+        }
     }
 }
