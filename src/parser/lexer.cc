@@ -4,7 +4,8 @@ namespace parser
 {
     lexer::lexer(std::istream &input):
         input_{input},
-        current_token_{token::BEGIN}
+        current_token_{token::BEGIN},
+        current_value_{'\0'}
     {}
 
     token lexer::current()
@@ -14,11 +15,17 @@ namespace parser
 
     char lexer::value()
     {
-        return '\0';
+        return current_value_;
     }
 
     void lexer::eat()
     {
-        current_token_ = token::END;
+        if (current_token_ == token::END
+            || !(input_ >> current_value_)) {
+            current_value_ = '\0';
+            current_token_ = token::END;
+            return;
+        }
+        current_token_ = token::DOT;
     }
 }
