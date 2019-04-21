@@ -31,5 +31,15 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 }
             }
         }
+        WHEN("a dot is the next character in the stream") {
+            stream << '.';
+            lexer.eat();
+            THEN("the token is dot") {
+                REQUIRE(lexer.current() == parser::token::DOT);
+            }
+            THEN("the value is a dot") {
+                REQUIRE(lexer.value() == '.');
+            }
+        }
     }
 }
