@@ -81,5 +81,67 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == 't');
             }
         }
+        WHEN("a backslash is the next character in the stream") {
+            stream << '\\';
+            WHEN("the backslash is followed by a dot") {
+                stream << '.';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                }
+                THEN("the value is a dot") {
+                    REQUIRE(lexer.value() == '.');
+                }
+            }
+            WHEN("the backslash is followed by a star") {
+                stream << '*';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                }
+                THEN("the value is a star") {
+                    REQUIRE(lexer.value() == '*');
+                }
+            }
+            WHEN("the backslash is followed by an opening parenthesis") {
+                stream << '(';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                }
+                THEN("the value is an opening parenthesis") {
+                    REQUIRE(lexer.value() == '(');
+                }
+            }
+            WHEN("the backslash is followed by a closing parenthesis") {
+                stream << ')';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                }
+                THEN("the value is a closing parenthesis") {
+                    REQUIRE(lexer.value() == ')');
+                }
+            }
+            WHEN("the backslash is followed by a regular character") {
+                stream << 't';
+                lexer.eat();
+                THEN("the token is error") {
+                    REQUIRE(lexer.current() == parser::token::ERROR);
+                }
+                THEN("the value is null") {
+                    REQUIRE(lexer.value() == '\0');
+                }
+            }
+            WHEN("the backslash is the last character") {
+                lexer.eat();
+                THEN("the token is error") {
+                    REQUIRE(lexer.current() == parser::token::ERROR);
+                }
+                THEN("the value is null") {
+                    REQUIRE(lexer.value() == '\0');
+                }
+            }
+        }
     }
 }
