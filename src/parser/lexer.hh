@@ -17,5 +17,8 @@ namespace parser
         token current();
         char value();
         void eat();
+
+    private:
+        void eatEscaped();
     };
 }

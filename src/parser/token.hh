@@ -10,6 +10,7 @@ namespace parser
         OPENING_PARENTHESIS,
         CLOSING_PARENTHESIS,
         CHARACTER,
+        ERROR,
         END
     };
 }

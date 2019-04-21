@@ -34,7 +34,32 @@ namespace parser
             current_token_ = token::OPENING_PARENTHESIS;
         else if (current_value_ == ')')
             current_token_ = token::CLOSING_PARENTHESIS;
+        else if (current_value_ == '\\')
+            eatEscaped();
         else
             current_token_ = token::CHARACTER;
+    }
+
+    void lexer::eatEscaped()
+    {
+        if (!(input_ >> current_value_)) {
+            current_value_ = '\0';
+            current_token_ = token::ERROR;
+            return;
+        }
+        if (current_value_ == '.')
+            current_token_ = token::CHARACTER;
+        else if (current_value_ == '*')
+            current_token_ = token::CHARACTER;
+        else if (current_value_ == '(')
+            current_token_ = token::CHARACTER;
+        else if (current_value_ == ')')
+            current_token_ = token::CHARACTER;
+        else if (current_value_ == '\\')
+            current_token_ = token::CHARACTER;
+        else {
+            current_token_ = token::ERROR;
+            current_value_ = '\0';
+        }
     }
 }
