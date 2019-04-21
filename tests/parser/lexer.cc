@@ -71,7 +71,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == ')');
             }
         }
-        WHEN("an unknown character is the next character in the stream") {
+        WHEN("an regular character is the next character in the stream") {
             stream << 't';
             lexer.eat();
             THEN("the token is character") {
