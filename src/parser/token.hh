@@ -7,6 +7,7 @@ namespace parser
         BEGIN,
         DOT,
         STAR,
+        OPENING_PARENTHESIS,
         END
     };
 }
