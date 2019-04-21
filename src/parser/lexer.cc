@@ -2,7 +2,7 @@
 
 namespace parser
 {
-    lexer::lexer(std::istream &input):
+    lexer::lexer(std::istream& input):
         input_{input},
         current_token_{token::BEGIN},
         current_value_{'\0'}
@@ -47,8 +47,7 @@ namespace parser
         if (!(input_ >> current_value_)) {
             current_value_ = '\0';
             current_token_ = token::END;
-        }
-        else if (current_value_ == '.') {
+        } else if (current_value_ == '.') {
             current_token_ = token::DOT;
         } else if (current_value_ == '*') {
             current_token_ = token::STAR;
