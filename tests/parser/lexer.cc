@@ -71,5 +71,15 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == ')');
             }
         }
+        WHEN("an unknown character is the next character in the stream") {
+            stream << 't';
+            lexer.eat();
+            THEN("the token is a character") {
+                REQUIRE(lexer.current() == parser::token::CHARACTER);
+            }
+            THEN("the value is the character") {
+                REQUIRE(lexer.value() == 't');
+            }
+        }
     }
 }
