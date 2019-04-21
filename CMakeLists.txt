@@ -7,7 +7,8 @@ add_executable(regex src/main.cc)
 
 add_executable(tests
     tests/main.cc
-    tests/catch.hpp)
+    tests/catch.hpp
+    tests/parser/lexer.cc)
 target_include_directories(tests PUBLIC tests)
 
 add_subdirectory(src/parser)
