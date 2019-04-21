@@ -26,6 +26,9 @@ namespace parser
             current_token_ = token::END;
             return;
         }
-        current_token_ = token::DOT;
+        if (current_value_ == '.')
+            current_token_ = token::DOT;
+        else
+            current_token_ = token::STAR;
     }
 }

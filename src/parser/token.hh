@@ -6,6 +6,7 @@ namespace parser
     {
         BEGIN,
         DOT,
+        STAR,
         END
     };
 }
