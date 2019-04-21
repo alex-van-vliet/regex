@@ -20,46 +20,46 @@ namespace parser
 
     void lexer::eat()
     {
-        if (current_token_ == token::END
-            || !(input_ >> current_value_)) {
-            current_value_ = '\0';
-            current_token_ = token::END;
+        if (current_token_ == token::END) {
             return;
         }
-        if (current_value_ == '.')
-            current_token_ = token::DOT;
-        else if (current_value_ == '*')
-            current_token_ = token::STAR;
-        else if (current_value_ == '(')
-            current_token_ = token::OPENING_PARENTHESIS;
-        else if (current_value_ == ')')
-            current_token_ = token::CLOSING_PARENTHESIS;
-        else if (current_value_ == '\\')
-            eatEscaped();
-        else
-            current_token_ = token::CHARACTER;
+        eat_character();
+        if (current_token_ == token::BACKSLASH) {
+            eat_escaped();
+        }
     }
 
-    void lexer::eatEscaped()
+    void lexer::eat_escaped()
+    {
+        eat_character();
+        if (current_token_ == token::END) {
+            current_token_ = token::ERROR;
+        } else if (current_token_ == token::CHARACTER) {
+            current_token_ = token::ERROR;
+            current_value_ = '\0';
+        } else {
+            current_token_ = token::CHARACTER;
+        }
+    }
+
+    void lexer::eat_character()
     {
         if (!(input_ >> current_value_)) {
             current_value_ = '\0';
-            current_token_ = token::ERROR;
-            return;
+            current_token_ = token::END;
         }
-        if (current_value_ == '.')
+        else if (current_value_ == '.') {
+            current_token_ = token::DOT;
+        } else if (current_value_ == '*') {
+            current_token_ = token::STAR;
+        } else if (current_value_ == '(') {
+            current_token_ = token::OPENING_PARENTHESIS;
+        } else if (current_value_ == ')') {
+            current_token_ = token::CLOSING_PARENTHESIS;
+        } else if (current_value_ == '\\') {
+            current_token_ = token::BACKSLASH;
+        } else {
             current_token_ = token::CHARACTER;
-        else if (current_value_ == '*')
-            current_token_ = token::CHARACTER;
-        else if (current_value_ == '(')
-            current_token_ = token::CHARACTER;
-        else if (current_value_ == ')')
-            current_token_ = token::CHARACTER;
-        else if (current_value_ == '\\')
-            current_token_ = token::CHARACTER;
-        else {
-            current_token_ = token::ERROR;
-            current_value_ = '\0';
         }
     }
 }

@@ -19,6 +19,7 @@ namespace parser
         void eat();
 
     private:
-        void eatEscaped();
+        void eat_escaped();
+        void eat_character();
     };
 }
