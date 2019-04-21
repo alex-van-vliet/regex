@@ -30,7 +30,9 @@ namespace parser
             current_token_ = token::DOT;
         else if (current_value_ == '*')
             current_token_ = token::STAR;
-        else
+        else if (current_value_ == '(')
             current_token_ = token::OPENING_PARENTHESIS;
+        else
+            current_token_ = token::CLOSING_PARENTHESIS;
     }
 }

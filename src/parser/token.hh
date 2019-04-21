@@ -8,6 +8,7 @@ namespace parser
         DOT,
         STAR,
         OPENING_PARENTHESIS,
+        CLOSING_PARENTHESIS,
         END
     };
 }
