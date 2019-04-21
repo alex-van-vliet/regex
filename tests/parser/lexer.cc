@@ -15,5 +15,21 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == '\0');
             }
         }
+        WHEN("the stream is empty") {
+            lexer.eat();
+            THEN("the token is end") {
+                REQUIRE(lexer.current() == parser::token::END);
+            }
+            THEN("the value is null") {
+                REQUIRE(lexer.value() == '\0');
+            }
+            WHEN("and we add something to the stream") {
+                stream << "test";
+                lexer.eat();
+                THEN("the token is end") {
+                    REQUIRE(lexer.current() == parser::token::END);
+                }
+            }
+        }
     }
 }
