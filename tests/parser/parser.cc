@@ -30,10 +30,10 @@ SCENARIO("The parser can build an AST", "[parser]") {
         }
         WHEN("the next two tokens are characters") {
             input << "te";
-            THEN("the AST contains a concatenation node and two token nodes") {
+            THEN("the AST contains a concatenation node and two character nodes") {
                 ast::node* node = parser.parse();
                 ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
-                THEN("the node contains two token node with the characters") {
+                THEN("the node contains two character nodes with the characters") {
                     ast::character* ast_left_token = dynamic_cast<ast::character*>(ast_concatenation->left());
                     ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_concatenation->right());
                     REQUIRE(ast_left_token->value() == 't');
