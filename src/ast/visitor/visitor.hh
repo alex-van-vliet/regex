@@ -7,6 +7,7 @@ namespace ast::visitor
     class visitor
     {
     public:
-        virtual void visit(ast::character& node) = 0;
+        virtual void operator()(node* node) = 0;
+        virtual void visit(character& node) = 0;
     };
 }

@@ -7,6 +7,7 @@ namespace ast
 
     void character::accept(visitor::visitor& v)
     {
+        v.visit(*this);
     }
 
     char character::value()

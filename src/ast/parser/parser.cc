@@ -8,9 +8,9 @@ namespace ast::parser
     {
     }
 
-    ast::node* parser::parse()
+    node* parser::parse()
     {
         lexer_.eat();
-        return new ast::character(lexer_.value());
+        return new character(lexer_.value());
     }
 }

@@ -12,6 +12,6 @@ namespace ast::parser
         lexer& lexer_;
     public:
         parser(lexer& lexer);
-        ast::node* parse();
+        node* parse();
     };
 }
