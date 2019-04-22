@@ -8,5 +8,6 @@ namespace parser::ast
     {
     public:
         virtual void accept(visitor::visitor& v) = 0;
+        virtual ~node() = default;
     };
 }
