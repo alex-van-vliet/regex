@@ -1,6 +1,7 @@
 #include <sstream>
 #include "catch.hpp"
 #include "parser.hh"
+#include "character.hh"
 
 SCENARIO("The parser can build an AST", "[parser]") {
     GIVEN("A parser with a lexer") {
@@ -13,7 +14,8 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 parser::ast::node* node = parser.parse();
                 parser::ast::character* ast_token = dynamic_cast<parser::ast::character*>(node);
                 THEN("The node contains the character") {
-                    REQUIRE(ast_token.value() == 't');
+                    REQUIRE(ast_token->value() == 't');
+                    delete(node);
                 }
             }
         }
