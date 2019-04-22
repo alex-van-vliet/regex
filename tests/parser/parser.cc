@@ -5,6 +5,7 @@
 #include "character.hh"
 #include "concatenation.hh"
 #include "disjunction.hh"
+#include "kleene.hh"
 
 SCENARIO("The parser can build an AST", "[parser]") {
     GIVEN("A parser with its a lexer and a pretty printer") {
@@ -63,6 +64,23 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next two characters are a character and a star") {
+            input << "t*";
+            THEN("the AST contains a kleene node") {
+                ast::node* node = parser.parse();
+                ast::kleene* ast_kleene = dynamic_cast<ast::kleene*>(node);
+                THEN("the node contains a character node with the character") {
+                    ast::character* ast_token = dynamic_cast<ast::character*>(ast_kleene->left());
+                    REQUIRE(ast_token->value() == 't');
+                    delete(node);
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t*");
                     delete(node);
                 }
             }
