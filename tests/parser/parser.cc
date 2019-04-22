@@ -260,5 +260,94 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 }
             }
         }
+        WHEN("the next characters are a character, a bar, another character and a star") {
+            input << "t|e*";
+            THEN("the AST contains one disjunction node, one character node, one kleene node and one character node") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the disjunction node contains a character node with the character and a kleene node") {
+                    ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_disjunction->left());
+                    ast::kleene* ast_kleene = dynamic_cast<ast::kleene*>(ast_disjunction->right());
+                    REQUIRE(ast_first_token->value() == 't');
+                    THEN("the kleene node contains a character node with the character") {
+                        ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_kleene->left());
+                        REQUIRE(ast_second_token->value() == 'e');
+                        delete node;
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t|e*");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next characters are an opening parenthesis, a character, a bar, another character, "
+             "a closing parenthesis and a star") {
+            input << "(t|e)*";
+            THEN("the AST contains one kleene node, one disjunction node, and two character nodes") {
+                ast::node* node = parser.parse();
+                ast::kleene* ast_kleene = dynamic_cast<ast::kleene*>(node);
+                THEN("the kleene node contains a disjunction node") {
+                    ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(ast_kleene->left());
+                    THEN("the disjunction node contains two character nodes with the characters") {
+                        ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_disjunction->left());
+                        ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_disjunction->right());
+                        REQUIRE(ast_first_token->value() == 't');
+                        REQUIRE(ast_second_token->value() == 'e');
+                        delete node;
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "(t|e)*");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next three characters are two characters and a star") {
+            input << "te*";
+            THEN("the AST contains one concatenation node, one character node, one kleene node and one character node") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the concatenation node contains a character node with the character and a kleene node") {
+                    ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_concatenation->left());
+                    ast::kleene* ast_kleene = dynamic_cast<ast::kleene*>(ast_concatenation->right());
+                    REQUIRE(ast_first_token->value() == 't');
+                    THEN("the kleene node contains a character node with the character") {
+                        ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_kleene->left());
+                        REQUIRE(ast_second_token->value() == 'e');
+                        delete node;
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "te*");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next characters are an opening parenthesis, two characters, a closing parenthesis and a star") {
+            input << "(te)*";
+            THEN("the AST contains one kleene node, one concatenation node, and two character nodes") {
+                ast::node* node = parser.parse();
+                ast::kleene* ast_kleene = dynamic_cast<ast::kleene*>(node);
+                THEN("the kleene node contains a concatenation node") {
+                    ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(ast_kleene->left());
+                    THEN("the concatenation node contains two character nodes with the characters") {
+                        ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_concatenation->left());
+                        ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_concatenation->right());
+                        REQUIRE(ast_first_token->value() == 't');
+                        REQUIRE(ast_second_token->value() == 'e');
+                        delete node;
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "(te)*");
+                    delete node;
+                }
+            }
+        }
     }
 }
