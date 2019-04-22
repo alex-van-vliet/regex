@@ -40,6 +40,16 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 REQUIRE(lexer.value() == '.');
             }
         }
+        WHEN("a bar is the next character in the stream") {
+            stream << '|';
+            lexer.eat();
+            THEN("the token is bar") {
+                REQUIRE(lexer.current() == ast::parser::token::BAR);
+            }
+            THEN("the value is a bar") {
+                REQUIRE(lexer.value() == '|');
+            }
+        }
         WHEN("a star is the next character in the stream") {
             stream << '*';
             lexer.eat();
@@ -90,6 +100,16 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 }
                 THEN("the value is a dot") {
                     REQUIRE(lexer.value() == '.');
+                }
+            }
+            WHEN("the backslash is followed by a bar") {
+                stream << '|';
+                lexer.eat();
+                THEN("the token is character") {
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
+                }
+                THEN("the value is a bar") {
+                    REQUIRE(lexer.value() == '|');
                 }
             }
             WHEN("the backslash is followed by a star") {
