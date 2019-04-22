@@ -3,6 +3,8 @@ add_library(ast
     character.cc
     character.hh
     forward.hh
+    concatenation.cc
+    concatenation.hh
     parser/lexer.cc
     parser/lexer.hh
     parser/parser.cc

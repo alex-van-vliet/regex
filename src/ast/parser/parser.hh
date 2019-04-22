@@ -13,5 +13,8 @@ namespace ast::parser
     public:
         parser(lexer& lexer);
         node* parse();
+    private:
+        node* parse_concatenation();
+        node* parse_expression();
     };
 }
