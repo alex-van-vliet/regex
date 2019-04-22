@@ -3,6 +3,7 @@
 #include "catch.hpp"
 #include "parser.hh"
 #include "character.hh"
+#include "concatenation.hh"
 
 SCENARIO("The parser can build an AST", "[parser]") {
     GIVEN("A parser with its a lexer and a pretty printer") {
@@ -23,6 +24,25 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next two tokens are characters") {
+            input << "te";
+            THEN("the AST contains a concatenation node and two token nodes") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the node contains two token node with the characters") {
+                    ast::character* ast_left_token = dynamic_cast<ast::character*>(ast_concatenation->left());
+                    ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_concatenation->right());
+                    REQUIRE(ast_left_token->value() == 't');
+                    REQUIRE(ast_right_token->value() == 'e');
+                    delete(node);
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "te");
                     delete(node);
                 }
             }
