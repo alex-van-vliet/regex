@@ -43,7 +43,21 @@ namespace ast::visitor
 
     void prettyprinter::visit(kleene& node)
     {
-        (*this)(node.left());
+        disjunction* left_is_disjunction = dynamic_cast<disjunction*>(node.left());
+        if (left_is_disjunction) {
+            output_ << '(';
+            (*this)(node.left());
+            output_ << ')';
+        } else {
+            concatenation* left_is_concatenation = dynamic_cast<concatenation*>(node.left());
+            if (left_is_concatenation) {
+                output_ << '(';
+                (*this)(node.left());
+                output_ << ')';
+            } else {
+                (*this)(node.left());
+            }
+        }
         output_ << '*';
     }
 }

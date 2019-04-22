@@ -14,17 +14,7 @@ namespace ast::parser
     node* parser::parse()
     {
         lexer_.eat();
-        return parse_kleene();
-    }
-
-    node* parser::parse_kleene()
-    {
-        node* expression = parse_disjunction();
-        if (lexer_.current() == token::STAR) {
-            lexer_.eat();
-            expression = new kleene(expression);
-        }
-        return expression;
+        return parse_disjunction();
     }
 
     node* parser::parse_disjunction()
@@ -39,10 +29,20 @@ namespace ast::parser
 
     node* parser::parse_concatenation()
     {
-        node* expression = parse_expression();
+        node* expression = parse_kleene();
         if (lexer_.current() == token::CHARACTER
             || lexer_.current() == token::OPENING_PARENTHESIS) {
             expression = new concatenation(expression, parse_concatenation());
+        }
+        return expression;
+    }
+
+    node* parser::parse_kleene()
+    {
+        node* expression = parse_expression();
+        if (lexer_.current() == token::STAR) {
+            lexer_.eat();
+            expression = new kleene(expression);
         }
         return expression;
     }
@@ -51,7 +51,7 @@ namespace ast::parser
     {
         if (lexer_.current() == token::OPENING_PARENTHESIS) {
             lexer_.eat();
-            node* expression = parse_kleene();
+            node* expression = parse_disjunction();
             lexer_.eat();
             return expression;
         } else {
