@@ -9,7 +9,7 @@ namespace ast
     private:
         char value_;
     public:
-        character(char value);
+        explicit character(char value);
         ~character() override = default;
         void accept(visitor::visitor& v) override;
         char value();

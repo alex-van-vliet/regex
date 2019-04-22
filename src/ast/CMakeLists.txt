@@ -10,6 +10,7 @@ add_library(ast
     parser/parser.cc
     parser/parser.hh
     parser/token.hh
+    visitor/visitor.cc
     visitor/visitor.hh
     visitor/prettyprinter.cc
     visitor/prettyprinter.hh)
