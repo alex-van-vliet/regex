@@ -16,8 +16,22 @@ namespace ast::visitor
 
     void prettyprinter::visit(concatenation& node)
     {
-        (*this)(node.left());
-        (*this)(node.right());
+        disjunction* left_is_disjunction = dynamic_cast<disjunction*>(node.left());
+        if (left_is_disjunction) {
+            output_ << '(';
+            (*this)(node.left());
+            output_ << ')';
+        } else {
+            (*this)(node.left());
+        }
+        disjunction* right_is_disjunction = dynamic_cast<disjunction*>(node.right());
+        if (right_is_disjunction) {
+            output_ << '(';
+            (*this)(node.right());
+            output_ << ')';
+        } else {
+            (*this)(node.right());
+        }
     }
 
     void prettyprinter::visit(disjunction& node)

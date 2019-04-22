@@ -30,9 +30,9 @@ namespace ast::parser
     node* parser::parse_disjunction()
     {
         node* expression = parse_concatenation();
-        while (lexer_.current() == token::BAR) {
+        if (lexer_.current() == token::BAR) {
             lexer_.eat();
-            expression = new disjunction(expression, parse_concatenation());
+            expression = new disjunction(expression, parse_disjunction());
         }
         return expression;
     }
@@ -40,8 +40,9 @@ namespace ast::parser
     node* parser::parse_concatenation()
     {
         node* expression = parse_expression();
-        while (lexer_.current() == token::CHARACTER) {
-            expression = new concatenation(expression, parse_expression());
+        if (lexer_.current() == token::CHARACTER
+            || lexer_.current() == token::OPENING_PARENTHESIS) {
+            expression = new concatenation(expression, parse_concatenation());
         }
         return expression;
     }
