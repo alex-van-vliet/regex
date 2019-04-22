@@ -140,5 +140,125 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 }
             }
         }
+        WHEN("the next characters are three characters") {
+            input << "tes";
+            THEN("the AST contains two concatenation nodes and three character nodes") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_first_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the node contains a character node with the character and a concatenation node") {
+                    ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_first_concatenation->left());
+                    ast::concatenation* ast_second_concatenation
+                        = dynamic_cast<ast::concatenation*>(ast_first_concatenation->right());
+                    REQUIRE(ast_first_token->value() == 't');
+                    THEN("the right node contains two character nodes with the characters") {
+                        ast::character* ast_second_token
+                            = dynamic_cast<ast::character*>(ast_second_concatenation->left());
+                        ast::character* ast_third_token
+                            = dynamic_cast<ast::character*>(ast_second_concatenation->right());
+                        REQUIRE(ast_second_token->value() == 'e');
+                        REQUIRE(ast_third_token->value() == 's');
+                        delete(node);
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "tes");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next characters are a character, a bar, another character, a bar, and another character") {
+            input << "t|e|s";
+            THEN("the AST contains two disjunction nodes and three character nodes") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_first_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the node contains a character node with the character and a disjunction node") {
+                    ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_first_disjunction->left());
+                    ast::disjunction* ast_second_disjunction
+                        = dynamic_cast<ast::disjunction*>(ast_first_disjunction->right());
+                    REQUIRE(ast_first_token->value() == 't');
+                    THEN("the right node contains two character nodes with the characters") {
+                        ast::character* ast_second_token
+                            = dynamic_cast<ast::character*>(ast_second_disjunction->left());
+                        ast::character* ast_third_token
+                            = dynamic_cast<ast::character*>(ast_second_disjunction->right());
+                        REQUIRE(ast_second_token->value() == 'e');
+                        REQUIRE(ast_third_token->value() == 's');
+                        delete(node);
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t|e|s");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next characters are two characters, a bar, and two other characters") {
+            input << "te|st";
+            THEN("the AST contains a disjunction node, two concatenation nodes, and four character nodes") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the node contains two concatenation nodes") {
+                    ast::concatenation* ast_left_concatenation
+                        = dynamic_cast<ast::concatenation*>(ast_disjunction->left());
+                    ast::concatenation* ast_right_concatenation
+                        = dynamic_cast<ast::concatenation*>(ast_disjunction->right());
+                    THEN("the left node contains two character nodes with the characters") {
+                        ast::character* ast_first_token = dynamic_cast<ast::character*>(ast_left_concatenation->left());
+                        ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_left_concatenation->right());
+                        REQUIRE(ast_first_token->value() == 't');
+                        REQUIRE(ast_second_token->value() == 'e');
+                        delete(node);
+                    }
+                    THEN("the right node contains two character nodes with the characters") {
+                        ast::character* ast_third_token = dynamic_cast<ast::character*>(ast_right_concatenation->left());
+                        ast::character* ast_fourth_token = dynamic_cast<ast::character*>(ast_right_concatenation->right());
+                        REQUIRE(ast_third_token->value() == 's');
+                        REQUIRE(ast_fourth_token->value() == 't');
+                        delete(node);
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "te|st");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next characters are a character, an opening parenthesis, a character, a bar, another character, "
+             "a closing parenthesis, and another character") {
+            input << "t(e|s)t";
+            THEN("the AST contains a two concatenation nodes, a disjunction node, and four character nodes") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_left_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the node contains a character node with the character and a concatenation node") {
+                    ast::character* ast_first_token
+                        = dynamic_cast<ast::character*>(ast_left_concatenation->left());
+                    ast::concatenation* ast_right_concatenation
+                        = dynamic_cast<ast::concatenation*>(ast_left_concatenation->right());
+                    REQUIRE(ast_first_token->value() == 't');
+                    THEN("the concatenation node contains a disjunction node and a character node with the character") {
+                        ast::disjunction* ast_disjunction
+                            = dynamic_cast<ast::disjunction*>(ast_right_concatenation->left());
+                        ast::character* ast_fourth_token
+                            = dynamic_cast<ast::character*>(ast_right_concatenation->right());
+                        REQUIRE(ast_fourth_token->value() == 't');
+                        THEN("the disjunction node contains two character nodes with the characters") {
+                            ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_disjunction->left());
+                            ast::character* ast_third_token = dynamic_cast<ast::character*>(ast_disjunction->right());
+                            REQUIRE(ast_second_token->value() == 'e');
+                            REQUIRE(ast_third_token->value() == 's');
+                            delete(node);
+                        }
+                    }
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t(e|s)t");
+                    delete(node);
+                }
+            }
+        }
     }
 }
