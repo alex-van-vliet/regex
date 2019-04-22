@@ -49,6 +49,8 @@ namespace ast::parser
             current_token_ = token::END;
         } else if (current_value_ == '.') {
             current_token_ = token::DOT;
+        } else if (current_value_ == '|') {
+            current_token_ = token::BAR;
         } else if (current_value_ == '*') {
             current_token_ = token::STAR;
         } else if (current_value_ == '(') {

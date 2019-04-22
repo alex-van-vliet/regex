@@ -6,6 +6,7 @@ namespace ast::parser
     {
         BEGIN,
         DOT,
+        BAR,
         STAR,
         OPENING_PARENTHESIS,
         CLOSING_PARENTHESIS,
