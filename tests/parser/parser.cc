@@ -21,12 +21,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 ast::character* ast_token = dynamic_cast<ast::character*>(node);
                 THEN("the node contains the character") {
                     REQUIRE(ast_token->value() == 't');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -40,12 +40,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                     ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_concatenation->right());
                     REQUIRE(ast_left_token->value() == 't');
                     REQUIRE(ast_right_token->value() == 'e');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "te");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -59,12 +59,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                     ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_disjunction->right());
                     REQUIRE(ast_left_token->value() == 't');
                     REQUIRE(ast_right_token->value() == 'e');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -76,12 +76,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 THEN("the node contains a character node with the character") {
                     ast::character* ast_token = dynamic_cast<ast::character*>(ast_kleene->left());
                     REQUIRE(ast_token->value() == 't');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t*");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -92,12 +92,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 ast::character* ast_token = dynamic_cast<ast::character*>(node);
                 THEN("the node contains the character") {
                     REQUIRE(ast_token->value() == 't');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same without the parenthesis") {
                     printer(node);
                     REQUIRE(output.str() == "t");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -111,12 +111,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                     ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_concatenation->right());
                     REQUIRE(ast_left_token->value() == 't');
                     REQUIRE(ast_right_token->value() == 'e');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same without the parenthesis") {
                     printer(node);
                     REQUIRE(output.str() == "te");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -131,12 +131,12 @@ SCENARIO("The parser can build an AST", "[parser]") {
                     ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_disjunction->right());
                     REQUIRE(ast_left_token->value() == 't');
                     REQUIRE(ast_right_token->value() == 'e');
-                    delete(node);
+                    delete node;
                 }
                 THEN("the pretty printed AST is the same without the parenthesis") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -157,13 +157,13 @@ SCENARIO("The parser can build an AST", "[parser]") {
                             = dynamic_cast<ast::character*>(ast_second_concatenation->right());
                         REQUIRE(ast_second_token->value() == 'e');
                         REQUIRE(ast_third_token->value() == 's');
-                        delete(node);
+                        delete node;
                     }
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "tes");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -184,13 +184,13 @@ SCENARIO("The parser can build an AST", "[parser]") {
                             = dynamic_cast<ast::character*>(ast_second_disjunction->right());
                         REQUIRE(ast_second_token->value() == 'e');
                         REQUIRE(ast_third_token->value() == 's');
-                        delete(node);
+                        delete node;
                     }
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e|s");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -209,20 +209,20 @@ SCENARIO("The parser can build an AST", "[parser]") {
                         ast::character* ast_second_token = dynamic_cast<ast::character*>(ast_left_concatenation->right());
                         REQUIRE(ast_first_token->value() == 't');
                         REQUIRE(ast_second_token->value() == 'e');
-                        delete(node);
+                        delete node;
                     }
                     THEN("the right node contains two character nodes with the characters") {
                         ast::character* ast_third_token = dynamic_cast<ast::character*>(ast_right_concatenation->left());
                         ast::character* ast_fourth_token = dynamic_cast<ast::character*>(ast_right_concatenation->right());
                         REQUIRE(ast_third_token->value() == 's');
                         REQUIRE(ast_fourth_token->value() == 't');
-                        delete(node);
+                        delete node;
                     }
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "te|st");
-                    delete(node);
+                    delete node;
                 }
             }
         }
@@ -249,14 +249,14 @@ SCENARIO("The parser can build an AST", "[parser]") {
                             ast::character* ast_third_token = dynamic_cast<ast::character*>(ast_disjunction->right());
                             REQUIRE(ast_second_token->value() == 'e');
                             REQUIRE(ast_third_token->value() == 's');
-                            delete(node);
+                            delete node;
                         }
                     }
                 }
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t(e|s)t");
-                    delete(node);
+                    delete node;
                 }
             }
         }
