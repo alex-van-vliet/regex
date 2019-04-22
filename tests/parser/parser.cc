@@ -4,6 +4,7 @@
 #include "parser.hh"
 #include "character.hh"
 #include "concatenation.hh"
+#include "disjunction.hh"
 
 SCENARIO("The parser can build an AST", "[parser]") {
     GIVEN("A parser with its a lexer and a pretty printer") {
@@ -43,6 +44,25 @@ SCENARIO("The parser can build an AST", "[parser]") {
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "te");
+                    delete(node);
+                }
+            }
+        }
+        WHEN("the next three characters are a character, a bar, and another character") {
+            input << "t|e";
+            THEN("the AST contains an dijunction node and two character nodes") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the node contains two character nodes with the characters") {
+                    ast::character* ast_left_token = dynamic_cast<ast::character*>(ast_disjunction->left());
+                    ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_disjunction->right());
+                    REQUIRE(ast_left_token->value() == 't');
+                    REQUIRE(ast_right_token->value() == 'e');
+                    delete(node);
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t|e");
                     delete(node);
                 }
             }
