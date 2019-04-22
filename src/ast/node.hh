@@ -2,7 +2,7 @@
 
 #include "visitor.hh"
 
-namespace parser::ast
+namespace ast
 {
     class node
     {

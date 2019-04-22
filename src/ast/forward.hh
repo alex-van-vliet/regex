@@ -1,6 +1,6 @@
 #pragma once
 
-namespace parser::ast
+namespace ast
 {
     class character;
 }

@@ -2,7 +2,7 @@
 
 #include "node.hh"
 
-namespace parser::ast
+namespace ast
 {
     class character: public node
     {

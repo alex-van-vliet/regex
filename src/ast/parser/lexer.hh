@@ -3,7 +3,7 @@
 #include <istream>
 #include "token.hh"
 
-namespace parser
+namespace ast::parser
 {
     class lexer
     {

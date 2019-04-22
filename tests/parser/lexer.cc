@@ -5,10 +5,10 @@
 SCENARIO("The lexer can parse tokens", "[lexer]") {
     GIVEN("A lexer with a stream") {
         auto stream = std::stringstream();
-        auto lexer = parser::lexer(stream);
+        auto lexer = ast::parser::lexer(stream);
         WHEN("no token was eaten") {
             THEN("the token is begin") {
-                REQUIRE(lexer.current() == parser::token::BEGIN);
+                REQUIRE(lexer.current() == ast::parser::token::BEGIN);
             }
             THEN ("the value is null") {
                 REQUIRE(lexer.value() == '\0');
@@ -17,7 +17,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
         WHEN("the stream is empty") {
             lexer.eat();
             THEN("the token is end") {
-                REQUIRE(lexer.current() == parser::token::END);
+                REQUIRE(lexer.current() == ast::parser::token::END);
             }
             THEN("the value is null") {
                 REQUIRE(lexer.value() == '\0');
@@ -26,7 +26,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << "test";
                 lexer.eat();
                 THEN("the token is end") {
-                    REQUIRE(lexer.current() == parser::token::END);
+                    REQUIRE(lexer.current() == ast::parser::token::END);
                 }
             }
         }
@@ -34,7 +34,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             stream << '.';
             lexer.eat();
             THEN("the token is dot") {
-                REQUIRE(lexer.current() == parser::token::DOT);
+                REQUIRE(lexer.current() == ast::parser::token::DOT);
             }
             THEN("the value is a dot") {
                 REQUIRE(lexer.value() == '.');
@@ -44,7 +44,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             stream << '*';
             lexer.eat();
             THEN("the token is star") {
-                REQUIRE(lexer.current() == parser::token::STAR);
+                REQUIRE(lexer.current() == ast::parser::token::STAR);
             }
             THEN("the value is a star") {
                 REQUIRE(lexer.value() == '*');
@@ -54,7 +54,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             stream << '(';
             lexer.eat();
             THEN("the token is opening parenthesis") {
-                REQUIRE(lexer.current() == parser::token::OPENING_PARENTHESIS);
+                REQUIRE(lexer.current() == ast::parser::token::OPENING_PARENTHESIS);
             }
             THEN("the value is an opening parenthesis") {
                 REQUIRE(lexer.value() == '(');
@@ -64,7 +64,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             stream << ')';
             lexer.eat();
             THEN("the token is closing parenthesis") {
-                REQUIRE(lexer.current() == parser::token::CLOSING_PARENTHESIS);
+                REQUIRE(lexer.current() == ast::parser::token::CLOSING_PARENTHESIS);
             }
             THEN("the value is a closing parenthesis") {
                 REQUIRE(lexer.value() == ')');
@@ -74,7 +74,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             stream << 't';
             lexer.eat();
             THEN("the token is character") {
-                REQUIRE(lexer.current() == parser::token::CHARACTER);
+                REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
             }
             THEN("the value is the character") {
                 REQUIRE(lexer.value() == 't');
@@ -86,7 +86,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << '.';
                 lexer.eat();
                 THEN("the token is character") {
-                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
                 }
                 THEN("the value is a dot") {
                     REQUIRE(lexer.value() == '.');
@@ -96,7 +96,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << '*';
                 lexer.eat();
                 THEN("the token is character") {
-                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
                 }
                 THEN("the value is a star") {
                     REQUIRE(lexer.value() == '*');
@@ -106,7 +106,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << '(';
                 lexer.eat();
                 THEN("the token is character") {
-                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
                 }
                 THEN("the value is an opening parenthesis") {
                     REQUIRE(lexer.value() == '(');
@@ -116,7 +116,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << ')';
                 lexer.eat();
                 THEN("the token is character") {
-                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
                 }
                 THEN("the value is a closing parenthesis") {
                     REQUIRE(lexer.value() == ')');
@@ -126,7 +126,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << '\\';
                 lexer.eat();
                 THEN("the token is character") {
-                    REQUIRE(lexer.current() == parser::token::CHARACTER);
+                    REQUIRE(lexer.current() == ast::parser::token::CHARACTER);
                 }
                 THEN("the value is a backslash") {
                     REQUIRE(lexer.value() == '\\');
@@ -136,7 +136,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                 stream << 't';
                 lexer.eat();
                 THEN("the token is error") {
-                    REQUIRE(lexer.current() == parser::token::ERROR);
+                    REQUIRE(lexer.current() == ast::parser::token::ERROR);
                 }
                 THEN("the value is null") {
                     REQUIRE(lexer.value() == '\0');
@@ -145,7 +145,7 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
             WHEN("the backslash is the last character") {
                 lexer.eat();
                 THEN("the token is error") {
-                    REQUIRE(lexer.current() == parser::token::ERROR);
+                    REQUIRE(lexer.current() == ast::parser::token::ERROR);
                 }
                 THEN("the value is null") {
                     REQUIRE(lexer.value() == '\0');

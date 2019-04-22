@@ -2,7 +2,7 @@
 
 #include "forward.hh"
 
-namespace parser::visitor
+namespace ast::visitor
 {
     class visitor
     {

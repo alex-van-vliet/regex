@@ -1,6 +1,7 @@
 #include "character.hh"
 
-namespace parser::ast{
+namespace ast
+{
     character::character(char value): value_{value}
     {}
 

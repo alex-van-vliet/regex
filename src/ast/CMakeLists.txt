@@ -1,0 +1,14 @@
+add_library(ast
+    node.hh
+    character.cc
+    character.hh
+    forward.hh
+    parser/lexer.cc
+    parser/lexer.hh
+    parser/parser.cc
+    parser/parser.hh
+    parser/token.hh
+    visitor/visitor.hh
+    visitor/prettyprinter.cc
+    visitor/prettyprinter.hh)
+target_include_directories(ast PUBLIC . parser visitor)

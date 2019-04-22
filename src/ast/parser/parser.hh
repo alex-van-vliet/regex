@@ -4,7 +4,7 @@
 #include "forward.hh"
 #include "node.hh"
 
-namespace parser
+namespace ast::parser
 {
     class parser
     {

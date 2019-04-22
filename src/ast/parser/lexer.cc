@@ -1,6 +1,6 @@
 #include "lexer.hh"
 
-namespace parser
+namespace ast::parser
 {
     lexer::lexer(std::istream& input):
         input_{input},

@@ -2,7 +2,7 @@
 
 #include "character.hh"
 
-namespace parser
+namespace ast::parser
 {
     parser::parser(lexer& lexer): lexer_{lexer}
     {
