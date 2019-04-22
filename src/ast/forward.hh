@@ -6,4 +6,5 @@ namespace ast
     class character;
     class concatenation;
     class disjunction;
+    class kleene;
 }

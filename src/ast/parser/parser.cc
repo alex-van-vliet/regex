@@ -3,6 +3,7 @@
 #include "character.hh"
 #include "concatenation.hh"
 #include "disjunction.hh"
+#include "kleene.hh"
 
 namespace ast::parser
 {
@@ -13,7 +14,17 @@ namespace ast::parser
     node* parser::parse()
     {
         lexer_.eat();
-        return parse_disjunction();
+        return parse_kleene();
+    }
+
+    node* parser::parse_kleene()
+    {
+        node* expression = parse_disjunction();
+        if (lexer_.current() == token::STAR) {
+            lexer_.eat();
+            expression = new kleene(expression);
+        }
+        return expression;
     }
 
     node* parser::parse_disjunction()

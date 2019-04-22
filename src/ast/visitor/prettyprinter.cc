@@ -2,6 +2,7 @@
 #include "character.hh"
 #include "concatenation.hh"
 #include "disjunction.hh"
+#include "kleene.hh"
 
 namespace ast::visitor
 {
@@ -24,5 +25,11 @@ namespace ast::visitor
         (*this)(node.left());
         output_ << '|';
         (*this)(node.right());
+    }
+
+    void prettyprinter::visit(kleene& node)
+    {
+        (*this)(node.left());
+        output_ << '*';
     }
 }

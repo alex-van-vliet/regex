@@ -7,6 +7,8 @@ add_library(ast
     concatenation.hh
     disjunction.cc
     disjunction.hh
+    kleene.cc
+    kleene.hh
     parser/lexer.cc
     parser/lexer.hh
     parser/parser.cc

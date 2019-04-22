@@ -14,6 +14,7 @@ namespace ast::parser
         parser(lexer& lexer);
         node* parse();
     private:
+        node* parse_kleene();
         node* parse_disjunction();
         node* parse_concatenation();
         node* parse_expression();
