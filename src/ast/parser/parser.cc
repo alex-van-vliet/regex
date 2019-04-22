@@ -48,8 +48,15 @@ namespace ast::parser
 
     node* parser::parse_expression()
     {
-        node* expression = new character(lexer_.value());
-        lexer_.eat();
-        return expression;
+        if (lexer_.current() == token::OPENING_PARENTHESIS) {
+            lexer_.eat();
+            node* expression = parse_kleene();
+            lexer_.eat();
+            return expression;
+        } else {
+            node* expression = new character(lexer_.value());
+            lexer_.eat();
+            return expression;
+        }
     }
 }
