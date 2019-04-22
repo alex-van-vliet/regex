@@ -2,6 +2,7 @@
 
 #include "character.hh"
 #include "concatenation.hh"
+#include "disjunction.hh"
 
 namespace ast::parser
 {
@@ -12,7 +13,17 @@ namespace ast::parser
     node* parser::parse()
     {
         lexer_.eat();
-        return parse_concatenation();
+        return parse_disjunction();
+    }
+
+    node* parser::parse_disjunction()
+    {
+        node* expression = parse_concatenation();
+        while (lexer_.current() == token::BAR) {
+            lexer_.eat();
+            expression = new disjunction(expression, parse_concatenation());
+        }
+        return expression;
     }
 
     node* parser::parse_concatenation()

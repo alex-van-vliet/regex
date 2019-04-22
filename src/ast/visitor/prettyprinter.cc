@@ -1,6 +1,7 @@
 #include "prettyprinter.hh"
 #include "character.hh"
 #include "concatenation.hh"
+#include "disjunction.hh"
 
 namespace ast::visitor
 {
@@ -15,6 +16,13 @@ namespace ast::visitor
     void prettyprinter::visit(concatenation& node)
     {
         (*this)(node.left());
+        (*this)(node.right());
+    }
+
+    void prettyprinter::visit(disjunction& node)
+    {
+        (*this)(node.left());
+        output_ << '|';
         (*this)(node.right());
     }
 }

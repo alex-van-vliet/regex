@@ -5,6 +5,8 @@ add_library(ast
     forward.hh
     concatenation.cc
     concatenation.hh
+    disjunction.cc
+    disjunction.hh
     parser/lexer.cc
     parser/lexer.hh
     parser/parser.cc
