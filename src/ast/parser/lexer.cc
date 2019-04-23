@@ -1,4 +1,5 @@
 #include "lexer.hh"
+#include "lexer_error.hh"
 
 namespace ast::parser
 {
@@ -33,10 +34,9 @@ namespace ast::parser
     {
         eat_character();
         if (current_token_ == token::END) {
-            current_token_ = token::ERROR;
+            throw lexer_error("A character is required after a \\.");
         } else if (current_token_ == token::CHARACTER) {
-            current_token_ = token::ERROR;
-            current_value_ = '\0';
+            throw lexer_error("A special character is required after a \\.");
         } else {
             current_token_ = token::CHARACTER;
         }

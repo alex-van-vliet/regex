@@ -4,6 +4,7 @@
 #include "concatenation.hh"
 #include "disjunction.hh"
 #include "kleene.hh"
+#include "parser_error.hh"
 
 namespace ast::parser
 {
@@ -14,7 +15,11 @@ namespace ast::parser
     node* parser::parse()
     {
         lexer_.eat();
-        return parse_disjunction();
+        node* expression = parse_disjunction();
+        if (lexer_.current() != token::END) {
+            throw parser_error("Expected end of stream.");
+        }
+        return expression;
     }
 
     node* parser::parse_disjunction()
@@ -44,6 +49,9 @@ namespace ast::parser
             lexer_.eat();
             expression = new kleene(expression);
         }
+        if (lexer_.current() == token::STAR) {
+            throw parser_error("A star is followed by another star.");
+        }
         return expression;
     }
 
@@ -52,8 +60,13 @@ namespace ast::parser
         if (lexer_.current() == token::OPENING_PARENTHESIS) {
             lexer_.eat();
             node* expression = parse_disjunction();
+            if (lexer_.current() != token::CLOSING_PARENTHESIS) {
+                throw parser_error("No closing parenthesis found after opening parenthesis.");
+            }
             lexer_.eat();
             return expression;
+        } else if (lexer_.current() == token::CLOSING_PARENTHESIS) {
+            throw parser_error("Unexpected closing parenthesis.");
         } else {
             node* expression = new character(lexer_.value());
             lexer_.eat();

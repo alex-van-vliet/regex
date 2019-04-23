@@ -14,6 +14,8 @@ add_library(ast
     parser/parser.cc
     parser/parser.hh
     parser/token.hh
+    parser/lexer_error.hh
+    parser/parser_error.hh
     visitor/visitor.cc
     visitor/visitor.hh
     visitor/prettyprinter.cc
