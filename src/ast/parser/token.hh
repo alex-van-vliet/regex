@@ -1,11 +1,12 @@
 #pragma once
 
-namespace parser
+namespace ast::parser
 {
     enum class token
     {
         BEGIN,
         DOT,
+        BAR,
         STAR,
         OPENING_PARENTHESIS,
         CLOSING_PARENTHESIS,

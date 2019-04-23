@@ -1,6 +1,7 @@
 #include "lexer.hh"
+#include "lexer_error.hh"
 
-namespace parser
+namespace ast::parser
 {
     lexer::lexer(std::istream& input):
         input_{input},
@@ -33,10 +34,9 @@ namespace parser
     {
         eat_character();
         if (current_token_ == token::END) {
-            current_token_ = token::ERROR;
+            throw lexer_error("A character is required after a \\.");
         } else if (current_token_ == token::CHARACTER) {
-            current_token_ = token::ERROR;
-            current_value_ = '\0';
+            throw lexer_error("A special character is required after a \\.");
         } else {
             current_token_ = token::CHARACTER;
         }
@@ -49,6 +49,8 @@ namespace parser
             current_token_ = token::END;
         } else if (current_value_ == '.') {
             current_token_ = token::DOT;
+        } else if (current_value_ == '|') {
+            current_token_ = token::BAR;
         } else if (current_value_ == '*') {
             current_token_ = token::STAR;
         } else if (current_value_ == '(') {
