@@ -1,6 +1,7 @@
 #include <sstream>
 #include <catch.hpp>
 #include "lexer.hh"
+#include "lexer_error.hh"
 
 SCENARIO("The lexer can parse tokens", "[lexer]") {
     GIVEN("A lexer with a stream") {
@@ -152,23 +153,15 @@ SCENARIO("The lexer can parse tokens", "[lexer]") {
                     REQUIRE(lexer.value() == '\\');
                 }
             }
-            WHEN("the backslash is followed by a regular character") {
-                stream << 't';
-                lexer.eat();
-                THEN("the token is error") {
-                    REQUIRE(lexer.current() == ast::parser::token::ERROR);
-                }
-                THEN("the value is null") {
-                    REQUIRE(lexer.value() == '\0');
+            WHEN("the backslash is not followed by a character") {
+                THEN("a lexer error is thrown") {
+                    REQUIRE_THROWS_AS(lexer.eat(), ast::parser::lexer_error);
                 }
             }
-            WHEN("the backslash is the last character") {
-                lexer.eat();
-                THEN("the token is error") {
-                    REQUIRE(lexer.current() == ast::parser::token::ERROR);
-                }
-                THEN("the value is null") {
-                    REQUIRE(lexer.value() == '\0');
+            WHEN("the backslash is followed by a regular character") {
+                stream << 't';
+                THEN("a lexer error is thrown") {
+                    REQUIRE_THROWS_AS(lexer.eat(), ast::parser::lexer_error);
                 }
             }
         }

@@ -6,6 +6,8 @@
 #include "concatenation.hh"
 #include "disjunction.hh"
 #include "kleene.hh"
+#include "parser_error.hh"
+#include "lexer_error.hh"
 
 SCENARIO("The parser can build an AST", "[parser]") {
     GIVEN("A parser with its a lexer and a pretty printer") {
@@ -347,6 +349,42 @@ SCENARIO("The parser can build an AST", "[parser]") {
                     REQUIRE(output.str() == "(te)*");
                     delete node;
                 }
+            }
+        }
+        WHEN("the two next characters are an opening parenthesis and a closing parenthesis") {
+            input << "()";
+            THEN("a parser error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::parser_error);
+            }
+        }
+        WHEN("an opening parenthesis is not closed") {
+            input << "(";
+            THEN("a parser error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::parser_error);
+            }
+        }
+        WHEN("the next character is a closing parenthesis but no parenthesis was opened") {
+            input << ")";
+            THEN("a parser error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::parser_error);
+            }
+        }
+        WHEN("the three next characters are a character and two stars") {
+            input << "t**";
+            THEN("a parser error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::parser_error);
+            }
+        }
+        WHEN("the next character is a backslash without a character after") {
+            input << "\\";
+            THEN("a lexer error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::lexer_error);
+            }
+        }
+        WHEN("the next two characters are a backslash with a regular character after") {
+            input << "\\t";
+            THEN("a lexer error is thrown") {
+                REQUIRE_THROWS_AS(parser.parse(), ast::parser::lexer_error);
             }
         }
     }
