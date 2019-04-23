@@ -1,0 +1,23 @@
+add_library(ast
+    node.hh
+    character.cc
+    character.hh
+    forward.hh
+    concatenation.cc
+    concatenation.hh
+    disjunction.cc
+    disjunction.hh
+    kleene.cc
+    kleene.hh
+    parser/lexer.cc
+    parser/lexer.hh
+    parser/parser.cc
+    parser/parser.hh
+    parser/token.hh
+    parser/lexer_error.hh
+    parser/parser_error.hh
+    visitor/visitor.cc
+    visitor/visitor.hh
+    visitor/prettyprinter.cc
+    visitor/prettyprinter.hh)
+target_include_directories(ast PUBLIC . parser visitor)
