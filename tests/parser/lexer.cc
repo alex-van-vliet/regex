@@ -3,7 +3,8 @@
 #include "lexer.hh"
 #include "lexer_error.hh"
 
-SCENARIO("The lexer can parse tokens", "[lexer]") {
+SCENARIO("The lexer can parse tokens", "[lexer]")
+{
     GIVEN("A lexer with a stream") {
         auto stream = std::stringstream();
         auto lexer = ast::parser::lexer(stream);

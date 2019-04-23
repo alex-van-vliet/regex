@@ -2,7 +2,8 @@
 
 namespace ast
 {
-    character::character(char value): value_{value}
+    character::character(char value):
+        value_{value}
     {}
 
     void character::accept(visitor::visitor& v)

@@ -6,7 +6,8 @@
 
 namespace ast::visitor
 {
-    prettyprinter::prettyprinter(std::ostream& output): output_{output}
+    prettyprinter::prettyprinter(std::ostream& output):
+        output_{output}
     {}
 
     void prettyprinter::visit(character& node)

@@ -2,7 +2,9 @@
 
 namespace ast
 {
-    concatenation::concatenation(node* left, node* right): left_{left}, right_{right}
+    concatenation::concatenation(node* left, node* right):
+        left_{left},
+        right_{right}
     {}
 
     concatenation::~concatenation()

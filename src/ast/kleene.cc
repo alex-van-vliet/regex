@@ -2,7 +2,8 @@
 
 namespace ast
 {
-    kleene::kleene(node* left): left_{left}
+    kleene::kleene(node* left):
+        left_{left}
     {}
 
     kleene::~kleene()

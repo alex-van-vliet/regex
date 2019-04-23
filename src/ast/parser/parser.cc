@@ -8,7 +8,8 @@
 
 namespace ast::parser
 {
-    parser::parser(lexer& lexer): lexer_{lexer}
+    parser::parser(lexer& lexer):
+        lexer_{lexer}
     {
     }
 

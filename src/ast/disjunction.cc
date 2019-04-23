@@ -2,7 +2,9 @@
 
 namespace ast
 {
-    disjunction::disjunction(node* left, node* right): left_{left}, right_{right}
+    disjunction::disjunction(node* left, node* right):
+        left_{left},
+        right_{right}
     {}
 
     disjunction::~disjunction()

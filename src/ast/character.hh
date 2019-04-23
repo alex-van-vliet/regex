@@ -4,7 +4,7 @@
 
 namespace ast
 {
-    class character: public node
+    class character : public node
     {
     private:
         char value_;

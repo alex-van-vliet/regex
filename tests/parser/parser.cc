@@ -1,5 +1,5 @@
 #include <sstream>
-#include <visitor/prettyprinter.hh>
+#include "prettyprinter.hh"
 #include "catch.hpp"
 #include "parser.hh"
 #include "character.hh"
@@ -9,7 +9,8 @@
 #include "parser_error.hh"
 #include "lexer_error.hh"
 
-SCENARIO("The parser can build an AST", "[parser]") {
+SCENARIO("The parser can build an AST", "[parser]")
+{
     GIVEN("A parser with its a lexer and a pretty printer") {
         auto input = std::stringstream();
         auto output = std::stringstream();
@@ -309,7 +310,8 @@ SCENARIO("The parser can build an AST", "[parser]") {
         }
         WHEN("the next three characters are two characters and a star") {
             input << "te*";
-            THEN("the AST contains one concatenation node, one character node, one kleene node and one character node") {
+            THEN(
+                "the AST contains one concatenation node, one character node, one kleene node and one character node") {
                 ast::node* node = parser.parse();
                 ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
                 THEN("the concatenation node contains a character node with the character and a kleene node") {
