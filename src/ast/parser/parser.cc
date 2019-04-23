@@ -17,6 +17,7 @@ namespace ast::parser
         lexer_.eat();
         node* expression = parse_disjunction();
         if (lexer_.current() != token::END) {
+            delete expression;
             throw parser_error("Expected end of stream.");
         }
         return expression;
@@ -27,7 +28,12 @@ namespace ast::parser
         node* expression = parse_concatenation();
         if (lexer_.current() == token::BAR) {
             lexer_.eat();
-            expression = new disjunction(expression, parse_disjunction());
+            try {
+                expression = new disjunction(expression, parse_disjunction());
+            } catch (const std::runtime_error&) {
+                delete expression;
+                throw;
+            }
         }
         return expression;
     }
@@ -37,7 +43,12 @@ namespace ast::parser
         node* expression = parse_kleene();
         if (lexer_.current() == token::CHARACTER
             || lexer_.current() == token::OPENING_PARENTHESIS) {
-            expression = new concatenation(expression, parse_concatenation());
+            try {
+                expression = new concatenation(expression, parse_concatenation());
+            } catch (const std::runtime_error&) {
+                delete expression;
+                throw;
+            }
         }
         return expression;
     }
@@ -50,6 +61,7 @@ namespace ast::parser
             expression = new kleene(expression);
         }
         if (lexer_.current() == token::STAR) {
+            delete expression;
             throw parser_error("A star is followed by another star.");
         }
         return expression;
@@ -61,6 +73,7 @@ namespace ast::parser
             lexer_.eat();
             node* expression = parse_disjunction();
             if (lexer_.current() != token::CLOSING_PARENTHESIS) {
+                delete expression;
                 throw parser_error("No closing parenthesis found after opening parenthesis.");
             }
             lexer_.eat();
