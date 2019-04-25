@@ -3,6 +3,7 @@
 #include "concatenation.hh"
 #include "disjunction.hh"
 #include "kleene.hh"
+#include "wildcard.hh"
 
 namespace ast::visitor
 {
@@ -13,6 +14,11 @@ namespace ast::visitor
     void prettyprinter::visit(character& node)
     {
         output_ << node.value();
+    }
+
+    void prettyprinter::visit(wildcard& node)
+    {
+        output_ << '.';
     }
 
     void prettyprinter::visit(concatenation& node)

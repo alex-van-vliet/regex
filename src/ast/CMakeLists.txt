@@ -9,6 +9,8 @@ add_library(ast
     disjunction.hh
     kleene.cc
     kleene.hh
+    wildcard.cc
+    wildcard.hh
     parser/lexer.cc
     parser/lexer.hh
     parser/parser.cc

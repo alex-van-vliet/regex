@@ -11,4 +11,6 @@ namespace ast
     class disjunction;
 
     class kleene;
+
+    class wildcard;
 }

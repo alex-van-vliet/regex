@@ -12,6 +12,7 @@ namespace ast::visitor
     public:
         prettyprinter(std::ostream& output);
         void visit(character& node) override;
+        void visit(wildcard& node) override;
         void visit(concatenation& node) override;
         void visit(disjunction& node) override;
         void visit(kleene& node) override;
