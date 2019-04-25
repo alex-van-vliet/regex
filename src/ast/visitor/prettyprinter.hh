@@ -16,6 +16,7 @@ namespace ast::visitor
         void visit(concatenation& node) override;
         void visit(disjunction& node) override;
         void visit(kleene& node) override;
+        ~prettyprinter() override = default;
     };
 }
 

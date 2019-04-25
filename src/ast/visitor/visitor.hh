@@ -13,5 +13,6 @@ namespace ast::visitor
         virtual void visit(concatenation& node) = 0;
         virtual void visit(disjunction& node) = 0;
         virtual void visit(kleene& node) = 0;
+        virtual ~visitor() = default;
     };
 }
