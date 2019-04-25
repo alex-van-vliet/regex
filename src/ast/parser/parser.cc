@@ -86,10 +86,12 @@ namespace ast::parser
             node* expression = new character(lexer_.value());
             lexer_.eat();
             return expression;
-        } else {
+        } else if (lexer_.current() == token::DOT) {
             node* expression = new wildcard();
             lexer_.eat();
             return expression;
+        } else {
+            throw parser_error("Unexpected token.");
         }
     }
 }
