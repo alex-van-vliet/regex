@@ -6,6 +6,7 @@
 #include "concatenation.hh"
 #include "disjunction.hh"
 #include "kleene.hh"
+#include "wildcard.hh"
 #include "parser_error.hh"
 #include "lexer_error.hh"
 
@@ -29,6 +30,19 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next token is a dot") {
+            input << ".";
+            THEN("the AST contains only a wildcard node") {
+                ast::node* node = parser.parse();
+                ast::wildcard* ast_wildcard = dynamic_cast<ast::wildcard*>(node);
+                REQUIRE(ast_wildcard != nullptr);
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == ".");
                     delete node;
                 }
             }
