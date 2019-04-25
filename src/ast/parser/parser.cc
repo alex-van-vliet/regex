@@ -5,6 +5,7 @@
 #include "disjunction.hh"
 #include "kleene.hh"
 #include "parser_error.hh"
+#include "wildcard.hh"
 
 namespace ast::parser
 {
@@ -81,8 +82,12 @@ namespace ast::parser
             return expression;
         } else if (lexer_.current() == token::CLOSING_PARENTHESIS) {
             throw parser_error("Unexpected closing parenthesis.");
-        } else {
+        } else if (lexer_.current() == token::CHARACTER) {
             node* expression = new character(lexer_.value());
+            lexer_.eat();
+            return expression;
+        } else {
+            node* expression = new wildcard();
             lexer_.eat();
             return expression;
         }
