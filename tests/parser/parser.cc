@@ -108,7 +108,7 @@ SCENARIO("The parser can build an AST", "[parser]")
         }
         WHEN("the next three characters are a character, a bar, and another character") {
             input << "t|e";
-            THEN("the AST contains an dijunction node and two character nodes") {
+            THEN("the AST contains a disjunction node and two character nodes") {
                 ast::node* node = parser.parse();
                 ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
                 THEN("the node contains two character nodes with the characters") {
@@ -220,7 +220,7 @@ SCENARIO("The parser can build an AST", "[parser]")
         WHEN("the next five characters are an opening parenthesis, a character, a bar, another character, "
              "and a closing parenthesis") {
             input << "(t|e)";
-            THEN("the AST contains an dijunction node and two character nodes") {
+            THEN("the AST contains a disjunction node and two character nodes") {
                 ast::node* node = parser.parse();
                 ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
                 THEN("the node contains two character nodes with the characters") {
