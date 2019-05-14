@@ -66,6 +66,46 @@ SCENARIO("The parser can build an AST", "[parser]")
                 }
             }
         }
+        WHEN("the next tokens are a dot and a character")
+        {
+            input << "t.";
+            THEN("the AST contains a concatenation node, a wildcard node and a character node") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the node contains a character node and a wildcard node") {
+                    ast::character* ast_left_token = dynamic_cast<ast::character*>(ast_concatenation->left());
+                    ast::wildcard* ast_right_token = dynamic_cast<ast::wildcard*>(ast_concatenation->right());
+                    REQUIRE(ast_left_token->value() == 't');
+                    REQUIRE(ast_right_token != nullptr);
+                    delete node;
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t.");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next tokens are a dot and a character")
+        {
+            input << ".e";
+            THEN("the AST contains a concatenation node, a character node and a wildcard node") {
+                ast::node* node = parser.parse();
+                ast::concatenation* ast_concatenation = dynamic_cast<ast::concatenation*>(node);
+                THEN("the node contains a wildcard node and a character node") {
+                    ast::wildcard* ast_left_token = dynamic_cast<ast::wildcard*>(ast_concatenation->left());
+                    ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_concatenation->right());
+                    REQUIRE(ast_left_token != nullptr);
+                    REQUIRE(ast_right_token->value() == 'e');
+                    delete node;
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == ".e");
+                    delete node;
+                }
+            }
+        }
         WHEN("the next three characters are a character, a bar, and another character") {
             input << "t|e";
             THEN("the AST contains an dijunction node and two character nodes") {
@@ -81,6 +121,46 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next tokens are a dot, a bar and a character")
+        {
+            input << "t|.";
+            THEN("the AST contains a disjunction node, a wildcard node and a character node") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the node contains a character node and a wildcard node") {
+                    ast::character* ast_left_token = dynamic_cast<ast::character*>(ast_disjunction->left());
+                    ast::wildcard* ast_right_token = dynamic_cast<ast::wildcard*>(ast_disjunction->right());
+                    REQUIRE(ast_left_token->value() == 't');
+                    REQUIRE(ast_right_token != nullptr);
+                    delete node;
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == "t|.");
+                    delete node;
+                }
+            }
+        }
+        WHEN("the next tokens are a dot, a bar and a character")
+        {
+            input << ".|e";
+            THEN("the AST contains a disjunction node, a character node and a wildcard node") {
+                ast::node* node = parser.parse();
+                ast::disjunction* ast_disjunction = dynamic_cast<ast::disjunction*>(node);
+                THEN("the node contains a wildcard node and a character node") {
+                    ast::wildcard* ast_left_token = dynamic_cast<ast::wildcard*>(ast_disjunction->left());
+                    ast::character* ast_right_token = dynamic_cast<ast::character*>(ast_disjunction->right());
+                    REQUIRE(ast_left_token != nullptr);
+                    REQUIRE(ast_right_token->value() == 'e');
+                    delete node;
+                }
+                THEN("the pretty printed AST is the same") {
+                    printer(node);
+                    REQUIRE(output.str() == ".|e");
                     delete node;
                 }
             }
