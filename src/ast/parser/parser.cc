@@ -44,7 +44,8 @@ namespace ast::parser
     {
         node* expression = parse_kleene();
         if (lexer_.current() == token::CHARACTER
-            || lexer_.current() == token::OPENING_PARENTHESIS) {
+            || lexer_.current() == token::OPENING_PARENTHESIS
+            || lexer_.current() == token::DOT) {
             try {
                 expression = new concatenation(expression, parse_concatenation());
             } catch (const std::runtime_error&) {
