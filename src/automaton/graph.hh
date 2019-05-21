@@ -13,7 +13,8 @@ namespace automaton
     {
     public:
         using states_t = std::unordered_map<state*, std::unique_ptr<state>>;
-        using transitions_t = std::unordered_set<std::unique_ptr<transition>>;
+        using transitions_t = std::unordered_map<transition*,
+            std::unique_ptr<transition>>;
     private:
         states_t states_;
         transitions_t transitions_;

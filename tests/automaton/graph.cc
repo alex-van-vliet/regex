@@ -58,11 +58,7 @@ SCENARIO("The graph can link states with transitions", "[graph]")
 
             THEN("The graph contains the transition")
             {
-                bool found = false;
-                for (const auto& other : graph.get_transitions())
-                    if (other.get() == transition)
-                        found = true;
-                REQUIRE(found);
+                REQUIRE(graph.get_transitions().find(transition) != graph.get_transitions().end());
             }
         }
 
