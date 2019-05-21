@@ -7,12 +7,13 @@
 
 SCENARIO("The graph can link states with transitions", "[graph]")
 {
-    GIVEN("A graph with two states") {
+    GIVEN("A graph with two states and a transition") {
         automaton::graph graph;
         automaton::state* state1 = graph.new_state();
-        REQUIRE(state1 != nullptr);
         automaton::state* state2 = graph.new_state();
-        REQUIRE(state2 != nullptr);
+        automaton::transition* transition1 = graph.new_transition<automaton::transitions::epsilon>(state1, state2);
+        graph.set_initial(state1, true);
+        graph.set_final(state2, true);
 
         THEN("state1 is not null")
         {
@@ -22,6 +23,67 @@ SCENARIO("The graph can link states with transitions", "[graph]")
         THEN("state2 is not null")
         {
             REQUIRE(state2 != nullptr);
+        }
+
+        THEN("transition1 is not null")
+        {
+            REQUIRE(transition1 != nullptr);
+        }
+
+        WHEN("The graph is merged into an empty graph")
+        {
+            automaton::graph other;
+            other.merge(graph);
+
+            THEN("state1 is now in other")
+            {
+                REQUIRE(other.get_states().find(state1) != other.get_states().end());
+            }
+
+            THEN("state1 is not in graph")
+            {
+                REQUIRE(graph.get_states().find(state1) == other.get_states().end());
+            }
+
+            THEN("state2 is now in other")
+            {
+                REQUIRE(other.get_states().find(state2) != other.get_states().end());
+            }
+
+            THEN("state2 is not in graph")
+            {
+                REQUIRE(graph.get_states().find(state2) == other.get_states().end());
+            }
+
+            THEN("state1 is initial in other")
+            {
+                REQUIRE(other.get_initial_states().find(state1) != other.get_initial_states().end());
+            }
+
+            THEN("state1 is not initial in graph")
+            {
+                REQUIRE(graph.get_initial_states().find(state1) == graph.get_initial_states().end());
+            }
+
+            THEN("state2 is final in other")
+            {
+                REQUIRE(other.get_final_states().find(state2) != other.get_final_states().end());
+            }
+
+            THEN("state2 is not final in graph")
+            {
+                REQUIRE(graph.get_final_states().find(state2) == graph.get_final_states().end());
+            }
+
+            THEN("transition1 is now in other")
+            {
+                REQUIRE(other.get_transitions().find(transition1) != other.get_transitions().end());
+            }
+
+            THEN("transition1 is not in graph")
+            {
+                REQUIRE(graph.get_transitions().find(transition1) == graph.get_transitions().end());
+            }
         }
 
         WHEN("An epsilon transition from state1 to state2 is added to the graph")
