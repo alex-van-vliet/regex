@@ -8,7 +8,7 @@
 namespace ast::visitor
 {
     alphabet_finder::alphabet_finder():
-        letters_{std::unordered_set<char>()}
+        letters_{}
     {}
 
     void alphabet_finder::visit(character& node)
@@ -37,7 +37,7 @@ namespace ast::visitor
         (*this)(node.left());
     }
 
-    const std::unordered_set<char>& alphabet_finder::letters() const
+    const alphabet_t& alphabet_finder::letters() const
     {
         return letters_;
     }

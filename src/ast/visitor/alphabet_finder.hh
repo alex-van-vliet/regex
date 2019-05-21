@@ -5,10 +5,12 @@
 
 namespace ast::visitor
 {
+    using alphabet_t = std::unordered_set<char>;
+
     class alphabet_finder: public visitor
     {
     private:
-        std::unordered_set<char> letters_;
+        alphabet_t letters_;
     public:
         alphabet_finder();
         void visit(character& node) override;
@@ -18,6 +20,6 @@ namespace ast::visitor
         void visit(kleene& node) override;
         virtual ~alphabet_finder() = default;
 
-        const std::unordered_set<char>& letters() const;
+        const alphabet_t& letters() const;
     };
 }
