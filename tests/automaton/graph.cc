@@ -28,6 +28,11 @@ SCENARIO("The graph can link states with transitions", "[graph]")
                 REQUIRE(graph.get_initial_states().find(state) == graph.get_initial_states().end());
             }
 
+            THEN("The state is not in the final set")
+            {
+                REQUIRE(graph.get_final_states().find(state) == graph.get_final_states().end());
+            }
+
             WHEN("The state is set as initial")
             {
                 graph.set_initial(state, true);
@@ -112,6 +117,47 @@ SCENARIO("The graph can link states with transitions", "[graph]")
                 THEN("The state is not in the initial set")
                 {
                     REQUIRE(graph.get_initial_states().find(state) == graph.get_initial_states().end());
+                }
+            }
+
+            WHEN("The state is set as final")
+            {
+                graph.set_final(state, true);
+
+                THEN("The state is in the final set")
+                {
+                    REQUIRE(graph.get_final_states().find(state) != graph.get_final_states().end());
+
+
+                    WHEN("The state is set as final")
+                    {
+                        graph.set_final(state, true);
+
+                        THEN("The state is in the final set")
+                        {
+                            REQUIRE(graph.get_final_states().find(state) != graph.get_final_states().end());
+                        }
+                    }
+
+                    WHEN("The state is set as non final")
+                    {
+                        graph.set_final(state, false);
+
+                        THEN("The state is not in the final set")
+                        {
+                            REQUIRE(graph.get_final_states().find(state) == graph.get_final_states().end());
+                        }
+                    }
+                }
+            }
+
+            WHEN("The state is set as non final")
+            {
+                graph.set_final(state, false);
+
+                THEN("The state is not in the final set")
+                {
+                    REQUIRE(graph.get_final_states().find(state) == graph.get_final_states().end());
                 }
             }
         }
