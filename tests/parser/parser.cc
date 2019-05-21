@@ -9,6 +9,7 @@
 #include "wildcard.hh"
 #include "parser_error.hh"
 #include "lexer_error.hh"
+#include "alphabet_finder.hh"
 
 SCENARIO("The parser can build an AST", "[parser]")
 {
@@ -18,6 +19,7 @@ SCENARIO("The parser can build an AST", "[parser]")
         auto lexer = ast::parser::lexer(input);
         auto parser = ast::parser::parser(lexer);
         auto printer = ast::visitor::prettyprinter(output);
+        auto alphabet = ast::visitor::alphabet_finder();
         WHEN("the next token is a character") {
             input << "t";
             THEN("the AST contains only a token node") {
@@ -32,6 +34,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "t");
                     delete node;
                 }
+                THEN("the alphabet contains a t")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next token is a dot") {
@@ -43,6 +51,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == ".");
+                    delete node;
+                }
+                THEN("the alphabet is empty")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({}));
                     delete node;
                 }
             }
@@ -62,6 +76,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "te");
+                    delete node;
+                }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
                     delete node;
                 }
             }
@@ -84,6 +104,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "t.");
                     delete node;
                 }
+                THEN("the alphabet contains a t")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next tokens are a dot and a character")
@@ -104,6 +130,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == ".e");
                     delete node;
                 }
+                THEN("the alphabet contains an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'e'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next three characters are a character, a bar, and another character") {
@@ -121,6 +153,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
+                    delete node;
+                }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
                     delete node;
                 }
             }
@@ -143,6 +181,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "t|.");
                     delete node;
                 }
+                THEN("the alphabet contains a t")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next tokens are a dot, a bar and a character")
@@ -163,6 +207,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == ".|e");
                     delete node;
                 }
+                THEN("the alphabet contains an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'e'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next two characters are a character and a star") {
@@ -180,6 +230,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "t*");
                     delete node;
                 }
+                THEN("the alphabet contains a t")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next three characters are an opening parenthesis, a character, and a closing parenthesis") {
@@ -194,6 +250,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same without the parenthesis") {
                     printer(node);
                     REQUIRE(output.str() == "t");
+                    delete node;
+                }
+                THEN("the alphabet contains a t")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t'}));
                     delete node;
                 }
             }
@@ -215,6 +277,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "te");
                     delete node;
                 }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next five characters are an opening parenthesis, a character, a bar, another character, "
@@ -233,6 +301,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same without the parenthesis") {
                     printer(node);
                     REQUIRE(output.str() == "t|e");
+                    delete node;
+                }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
                     delete node;
                 }
             }
@@ -262,6 +336,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "tes");
                     delete node;
                 }
+                THEN("the alphabet contains a t, an e and a s")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e', 's'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next characters are a character, a bar, another character, a bar, and another character") {
@@ -287,6 +367,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e|s");
+                    delete node;
+                }
+                THEN("the alphabet contains a t, an e and a s")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e', 's'}));
                     delete node;
                 }
             }
@@ -319,6 +405,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "te|st");
+                    delete node;
+                }
+                THEN("the alphabet contains a t, an e and a s")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e', 's'}));
                     delete node;
                 }
             }
@@ -355,6 +447,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "t(e|s)t");
                     delete node;
                 }
+                THEN("the alphabet contains a t, an e and a s")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e', 's'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next characters are a character, a bar, another character and a star") {
@@ -375,6 +473,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "t|e*");
+                    delete node;
+                }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
                     delete node;
                 }
             }
@@ -400,6 +504,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "(t|e)*");
                     delete node;
                 }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next three characters are two characters and a star") {
@@ -423,6 +533,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                     REQUIRE(output.str() == "te*");
                     delete node;
                 }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
+                    delete node;
+                }
             }
         }
         WHEN("the next characters are an opening parenthesis, two characters, a closing parenthesis and a star") {
@@ -443,6 +559,12 @@ SCENARIO("The parser can build an AST", "[parser]")
                 THEN("the pretty printed AST is the same") {
                     printer(node);
                     REQUIRE(output.str() == "(te)*");
+                    delete node;
+                }
+                THEN("the alphabet contains a t and an e")
+                {
+                    alphabet(node);
+                    REQUIRE(alphabet.letters() == std::unordered_set<char>({'t', 'e'}));
                     delete node;
                 }
             }
