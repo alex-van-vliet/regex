@@ -16,7 +16,7 @@ namespace ast::visitor
         output_ << node.value();
     }
 
-    void prettyprinter::visit(wildcard& node)
+    void prettyprinter::visit([[maybe_unused]] wildcard& node)
     {
         output_ << '.';
     }

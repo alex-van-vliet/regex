@@ -16,7 +16,7 @@ namespace ast::visitor
         letters_.insert(node.value());
     }
 
-    void alphabet_finder::visit(wildcard& node)
+    void alphabet_finder::visit([[maybe_unused]] wildcard& node)
     {
     }
 
