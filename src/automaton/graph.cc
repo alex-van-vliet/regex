@@ -9,6 +9,14 @@ namespace automaton
         final_states_{}
     {}
 
+    void graph::merge(automaton::graph& graph)
+    {
+        states_.merge(graph.states_);
+        transitions_.merge(graph.transitions_);
+        initial_states_.merge(graph.initial_states_);
+        final_states_.merge(graph.final_states_);
+    }
+
     const graph::states_t& graph::get_states() const
     {
         return states_;
