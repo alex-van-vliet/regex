@@ -21,5 +21,7 @@ add_library(ast
     visitor/visitor.cc
     visitor/visitor.hh
     visitor/prettyprinter.cc
-    visitor/prettyprinter.hh)
+    visitor/prettyprinter.hh
+    visitor/alphabet_finder.cc
+    visitor/alphabet_finder.hh)
 target_include_directories(ast PUBLIC . parser visitor)
