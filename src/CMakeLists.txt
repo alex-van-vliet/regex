@@ -28,8 +28,7 @@ add_library(lib
     automaton/graph.hh
     automaton/transition.cc
     automaton/transition.hh
+    automaton/state.cc
     automaton/state.hh
-    automaton/transitions/epsilon.cc
-    automaton/transitions/epsilon.hh
     automaton/forward.hh)
 target_include_directories(lib PUBLIC .)

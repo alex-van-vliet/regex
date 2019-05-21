@@ -20,11 +20,12 @@ namespace automaton
         graph();
         void merge(graph& graph);
 
-        state* add_state();
+        state* new_state();
         void set_initial(state* state, bool initial);
         void set_final(state* state, bool final);
 
-        const std::unordered_set<state*> get_initial_states() const;
-        const std::unordered_set<state*> get_final_states() const;
+        const std::unordered_set<std::unique_ptr<state>>& get_states() const;
+        const std::unordered_set<state*>& get_initial_states() const;
+        const std::unordered_set<state*>& get_final_states() const;
     };
 }
