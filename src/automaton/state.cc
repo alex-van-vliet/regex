@@ -1,5 +1,3 @@
-#pragma once
-
 #include "automaton/state.hh"
 
 namespace automaton
