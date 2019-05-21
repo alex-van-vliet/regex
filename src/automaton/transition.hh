@@ -14,7 +14,7 @@ namespace automaton
         transition(state* source, state* destination);
 
         state* get_source();
-        state* destination();
+        state* get_destination();
 
         virtual bool accept(char c) = 0;
         virtual ~transition() = default;

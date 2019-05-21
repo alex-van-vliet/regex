@@ -24,8 +24,17 @@ namespace automaton
         void set_initial(state* state, bool initial);
         void set_final(state* state, bool final);
 
+        template <typename type, typename... types>
+        transition* new_transition(state* source, state* destination,
+            types... args);
+
         const std::unordered_set<std::unique_ptr<state>>& get_states() const;
         const std::unordered_set<state*>& get_initial_states() const;
         const std::unordered_set<state*>& get_final_states() const;
+
+        const std::unordered_set<std::unique_ptr<transition>>&
+            get_transitions() const;
     };
 }
+
+#include "graph.hxx"

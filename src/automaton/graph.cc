@@ -44,4 +44,10 @@ namespace automaton
     {
         return final_states_;
     }
+
+    const std::unordered_set<std::unique_ptr<transition>>&
+        graph::get_transitions() const
+    {
+        return transitions_;
+    }
 }

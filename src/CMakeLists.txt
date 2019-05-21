@@ -26,9 +26,12 @@ add_library(lib
     ast/visitor/alphabet_finder.hh
     automaton/graph.cc
     automaton/graph.hh
+    automaton/graph.hxx
     automaton/transition.cc
     automaton/transition.hh
     automaton/state.cc
     automaton/state.hh
-    automaton/forward.hh)
+    automaton/forward.hh
+    automaton/transitions/epsilon.cc
+    automaton/transitions/epsilon.hh)
 target_include_directories(lib PUBLIC .)
