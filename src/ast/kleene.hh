@@ -1,6 +1,6 @@
 #pragma once
 
-#include "node.hh"
+#include "ast/node.hh"
 
 namespace ast
 {

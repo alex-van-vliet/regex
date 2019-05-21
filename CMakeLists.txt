@@ -13,6 +13,6 @@ add_executable(tests
     tests/parser/parser.cc)
 target_include_directories(tests PUBLIC tests)
 
-add_subdirectory(src/ast)
-target_link_libraries(regex PRIVATE ast)
-target_link_libraries(tests PRIVATE ast)
+add_subdirectory(src)
+target_link_libraries(regex PRIVATE lib)
+target_link_libraries(tests PRIVATE lib)

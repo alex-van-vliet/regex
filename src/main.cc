@@ -1,8 +1,8 @@
 #include <iostream>
-#include "lexer.hh"
-#include "parser.hh"
-#include "prettyprinter.hh"
-#include "alphabet_finder.hh"
+#include "ast/parser/lexer.hh"
+#include "ast/parser/parser.hh"
+#include "ast/visitor/prettyprinter.hh"
+#include "ast/visitor/alphabet_finder.hh"
 
 int main()
 {

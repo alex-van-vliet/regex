@@ -1,4 +1,4 @@
-#include "character.hh"
+#include "ast/character.hh"
 
 namespace ast
 {

@@ -1,4 +1,4 @@
-#include "concatenation.hh"
+#include "ast/concatenation.hh"
 
 namespace ast
 {

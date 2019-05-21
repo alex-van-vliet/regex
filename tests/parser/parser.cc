@@ -1,15 +1,15 @@
 #include <sstream>
-#include "prettyprinter.hh"
-#include "catch.hpp"
-#include "parser.hh"
-#include "character.hh"
-#include "concatenation.hh"
-#include "disjunction.hh"
-#include "kleene.hh"
-#include "wildcard.hh"
-#include "parser_error.hh"
-#include "lexer_error.hh"
-#include "alphabet_finder.hh"
+#include <catch.hpp>
+#include "ast/visitor/prettyprinter.hh"
+#include "ast/parser/parser.hh"
+#include "ast/character.hh"
+#include "ast/concatenation.hh"
+#include "ast/disjunction.hh"
+#include "ast/kleene.hh"
+#include "ast/wildcard.hh"
+#include "ast/parser/parser_error.hh"
+#include "ast/parser/lexer_error.hh"
+#include "ast/visitor/alphabet_finder.hh"
 
 SCENARIO("The parser can build an AST", "[parser]")
 {

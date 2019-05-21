@@ -1,8 +1,8 @@
 #pragma once
 
-#include "lexer.hh"
-#include "forward.hh"
-#include "node.hh"
+#include "ast/parser/lexer.hh"
+#include "ast/forward.hh"
+#include "ast/node.hh"
 
 namespace ast::parser
 {

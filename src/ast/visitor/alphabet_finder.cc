@@ -1,9 +1,9 @@
-#include "alphabet_finder.hh"
-#include "character.hh"
-#include "concatenation.hh"
-#include "disjunction.hh"
-#include "kleene.hh"
-#include "wildcard.hh"
+#include "ast/visitor/alphabet_finder.hh"
+#include "ast/character.hh"
+#include "ast/concatenation.hh"
+#include "ast/disjunction.hh"
+#include "ast/kleene.hh"
+#include "ast/wildcard.hh"
 
 namespace ast::visitor
 {

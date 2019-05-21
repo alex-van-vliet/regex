@@ -1,4 +1,4 @@
-#include "disjunction.hh"
+#include "ast/disjunction.hh"
 
 namespace ast
 {

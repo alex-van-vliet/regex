@@ -1,4 +1,4 @@
-#include "wildcard.hh"
+#include "ast/wildcard.hh"
 
 namespace ast
 {

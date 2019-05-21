@@ -1,7 +1,7 @@
 #pragma once
 
 #include <istream>
-#include "token.hh"
+#include "ast/parser/token.hh"
 
 namespace ast::parser
 {

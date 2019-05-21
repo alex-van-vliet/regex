@@ -1,6 +1,6 @@
 #pragma once
 
-#include "visitor.hh"
+#include "ast/visitor/visitor.hh"
 
 namespace ast
 {

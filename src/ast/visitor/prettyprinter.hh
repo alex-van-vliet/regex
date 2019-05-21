@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ostream>
-#include "visitor.hh"
+#include "ast/visitor/visitor.hh"
 
 namespace ast::visitor
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <unordered_set>
-#include "visitor.hh"
+#include "ast/visitor/visitor.hh"
 
 namespace ast::visitor
 {

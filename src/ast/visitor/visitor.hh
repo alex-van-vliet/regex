@@ -1,6 +1,6 @@
 #pragma once
 
-#include "forward.hh"
+#include "ast/forward.hh"
 
 namespace ast::visitor
 {

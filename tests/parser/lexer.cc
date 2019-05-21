@@ -1,7 +1,7 @@
 #include <sstream>
 #include <catch.hpp>
-#include "lexer.hh"
-#include "lexer_error.hh"
+#include "ast/parser/lexer.hh"
+#include "ast/parser/lexer_error.hh"
 
 SCENARIO("The lexer can parse tokens", "[lexer]")
 {

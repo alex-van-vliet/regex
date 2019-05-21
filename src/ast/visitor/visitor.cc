@@ -1,6 +1,6 @@
 #include "visitor.hh"
 
-#include "node.hh"
+#include "ast/node.hh"
 
 namespace ast::visitor
 {

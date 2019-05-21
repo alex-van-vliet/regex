@@ -1,0 +1,27 @@
+add_library(lib
+    ast/node.hh
+    ast/character.cc
+    ast/character.hh
+    ast/forward.hh
+    ast/concatenation.cc
+    ast/concatenation.hh
+    ast/disjunction.cc
+    ast/disjunction.hh
+    ast/kleene.cc
+    ast/kleene.hh
+    ast/wildcard.cc
+    ast/wildcard.hh
+    ast/parser/lexer.cc
+    ast/parser/lexer.hh
+    ast/parser/parser.cc
+    ast/parser/parser.hh
+    ast/parser/token.hh
+    ast/parser/lexer_error.hh
+    ast/parser/parser_error.hh
+    ast/visitor/visitor.cc
+    ast/visitor/visitor.hh
+    ast/visitor/prettyprinter.cc
+    ast/visitor/prettyprinter.hh
+    ast/visitor/alphabet_finder.cc
+    ast/visitor/alphabet_finder.hh)
+target_include_directories(lib PUBLIC .)
