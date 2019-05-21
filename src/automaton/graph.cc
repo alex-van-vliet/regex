@@ -9,14 +9,17 @@ namespace automaton
         final_states_{}
     {}
 
-    const std::unordered_set<std::unique_ptr<state>>& graph::get_states() const
+    const graph::states_t& graph::get_states() const
     {
         return states_;
     }
 
     state* graph::new_state()
     {
-        return states_.insert(std::make_unique<state>()).first->get();
+        auto unique = std::make_unique<state>();
+        auto address = unique.get();
+        states_.insert({unique.get(), std::move(unique)});
+        return address;
     }
 
     void graph::set_initial(automaton::state* state, bool initial)
@@ -45,8 +48,7 @@ namespace automaton
         return final_states_;
     }
 
-    const std::unordered_set<std::unique_ptr<transition>>&
-        graph::get_transitions() const
+    const graph::transitions_t& graph::get_transitions() const
     {
         return transitions_;
     }

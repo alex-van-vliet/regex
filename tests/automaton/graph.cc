@@ -10,7 +10,19 @@ SCENARIO("The graph can link states with transitions", "[graph]")
     GIVEN("A graph with two states") {
         automaton::graph graph;
         automaton::state* state1 = graph.new_state();
+        REQUIRE(state1 != nullptr);
         automaton::state* state2 = graph.new_state();
+        REQUIRE(state2 != nullptr);
+
+        THEN("state1 is not null")
+        {
+            REQUIRE(state1 != nullptr);
+        }
+
+        THEN("state2 is not null")
+        {
+            REQUIRE(state2 != nullptr);
+        }
 
         WHEN("An epsilon transition from state1 to state2 is added to the graph")
         {
@@ -64,11 +76,7 @@ SCENARIO("The graph can link states with transitions", "[graph]")
 
             THEN("The graph contains the state")
             {
-                bool found = false;
-                for (const auto& other : graph.get_states())
-                    if (other.get() == state)
-                        found = true;
-                REQUIRE(found);
+                REQUIRE(graph.get_states().find(state) != graph.get_states().end());
             }
 
             THEN("The state is not in the initial set")
