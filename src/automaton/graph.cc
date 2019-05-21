@@ -31,4 +31,17 @@ namespace automaton
     {
         return initial_states_;
     }
+
+    void graph::set_final(automaton::state* state, bool final)
+    {
+        if (final)
+            final_states_.insert(state);
+        else
+            final_states_.erase(state);
+    }
+
+    const std::unordered_set<state*>& graph::get_final_states() const
+    {
+        return final_states_;
+    }
 }
