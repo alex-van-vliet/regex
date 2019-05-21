@@ -10,7 +10,8 @@ add_executable(tests
     tests/main.cc
     tests/catch.hpp
     tests/parser/lexer.cc
-    tests/parser/parser.cc)
+    tests/parser/parser.cc
+    tests/automaton/graph.cc)
 target_include_directories(tests PUBLIC tests)
 
 add_subdirectory(src)

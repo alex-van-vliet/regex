@@ -23,5 +23,13 @@ add_library(lib
     ast/visitor/prettyprinter.cc
     ast/visitor/prettyprinter.hh
     ast/visitor/alphabet_finder.cc
-    ast/visitor/alphabet_finder.hh)
+    ast/visitor/alphabet_finder.hh
+    automaton/graph.cc
+    automaton/graph.hh
+    automaton/transition.cc
+    automaton/transition.hh
+    automaton/state.hh
+    automaton/transitions/epsilon.cc
+    automaton/transitions/epsilon.hh
+    automaton/forward.hh)
 target_include_directories(lib PUBLIC .)
