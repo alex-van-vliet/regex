@@ -22,6 +22,26 @@ SCENARIO("The graph can link states with transitions", "[graph]")
                         found = true;
                 REQUIRE(found);
             }
+
+            WHEN("The state is set as initial")
+            {
+                graph.set_initial(state, true);
+
+                THEN("The state is in the initial set")
+                {
+                    REQUIRE(graph.get_initial_states().find(state) != graph.get_initial_states().end());
+
+                    WHEN("The state is set as non initial")
+                    {
+                        graph.set_initial(state, false);
+
+                        THEN("The state is not in the initial set")
+                        {
+                            REQUIRE(graph.get_initial_states().find(state) == graph.get_initial_states().end());
+                        }
+                    }
+                }
+            }
         }
     }
 }
