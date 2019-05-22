@@ -33,5 +33,9 @@ add_library(lib
     automaton/state.hh
     automaton/forward.hh
     automaton/transitions/epsilon.cc
-    automaton/transitions/epsilon.hh)
+    automaton/transitions/epsilon.hh
+    automaton/algorithms/thompson.cc
+    automaton/algorithms/thompson.hh
+    automaton/transitions/letter.cc
+    automaton/transitions/letter.hh)
 target_include_directories(lib PUBLIC .)
